@@ -13,6 +13,7 @@
 		B398D75C278205F100C3009D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B398D75A278205F100C3009D /* Main.storyboard */; };
 		B398D75E278205F300C3009D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B398D75D278205F300C3009D /* Assets.xcassets */; };
 		B398D761278205F300C3009D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B398D75F278205F300C3009D /* LaunchScreen.storyboard */; };
+		B398D7692782168100C3009D /* calculateLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B398D7682782168100C3009D /* calculateLogic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B398D75D278205F300C3009D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B398D760278205F300C3009D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B398D762278205F300C3009D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B398D7682782168100C3009D /* calculateLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calculateLogic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				B398D754278205F100C3009D /* AppDelegate.swift */,
 				B398D756278205F100C3009D /* SceneDelegate.swift */,
 				B398D758278205F100C3009D /* ViewController.swift */,
+				B398D7682782168100C3009D /* calculateLogic.swift */,
 				B398D75A278205F100C3009D /* Main.storyboard */,
 				B398D75D278205F300C3009D /* Assets.xcassets */,
 				B398D75F278205F300C3009D /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 				B398D759278205F100C3009D /* ViewController.swift in Sources */,
 				B398D755278205F100C3009D /* AppDelegate.swift in Sources */,
 				B398D757278205F100C3009D /* SceneDelegate.swift in Sources */,
+				B398D7692782168100C3009D /* calculateLogic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
