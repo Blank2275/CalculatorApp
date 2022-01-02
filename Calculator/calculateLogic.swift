@@ -31,10 +31,10 @@ func parseExpression(input:String)->[[Any]]{
         } else if char == "-" {
             operators.append(Operator.sub)
             resetCurrentNumberString()
-        } else if char == "*"{
+        } else if char == "×"{
             operators.append(Operator.mul)
             resetCurrentNumberString()
-        } else if char == "/" {
+        } else if char == "÷" {
             operators.append(Operator.div)
             resetCurrentNumberString()
         } else if char == "^"{
@@ -85,15 +85,14 @@ func evaluateExpression(input: [[Any]])->Float{
         }
         return res
     }
-    func applyOperation(num:Int, type:Operator){
+    func applyOperation(num:Int, type:Operator) -> Float{
         var res:Float = 0
         var delete = true
-        print(numbers)
-        print(operators)
+        if numbers[num] == nil || numbers[num + 1] == nil{
+            return -1
+        }
         switch type{
         case .mul:
-            //print(num)
-            //print(numbers)
             res = numbers[num] * numbers[num + 1]
         case .div:
             res = numbers[num] / numbers[num + 1]
@@ -105,23 +104,16 @@ func evaluateExpression(input: [[Any]])->Float{
             res = pow(numbers[num], numbers[num + 1])
         case .open:
             let closingOperator = closingParenthacesAfter(arr: operators, num: num)
+            if closingOperator == -1 {return -1.0}
             let closingNumber = getAccurateOperatorNum(operatorNum: closingOperator)
-            //print(operators)
-            //print(numbers)
-            //print(closingOperator)
-            //print(num)
             let pnumbers = Array(numbers[num...closingNumber])
-            //print(pnumbers)
-            //print(closingNumber)
             let poperators = Array(operators[(num + 1)..<closingOperator])
-            //print(pnumbers)
             let presult = evaluateExpression(input: [pnumbers, poperators])
             res = presult
             delete = false
             //remove the parenthaces differently from the rest
             numbers.removeSubrange(num..<closingNumber + 1)
             operators.removeSubrange(num..<(closingOperator + 1))
-            //print(operators)
         case .close:
             break
         default:
@@ -134,17 +126,15 @@ func evaluateExpression(input: [[Any]])->Float{
         }
         numbers.insert(res, at: num)
         operatorNum = 0
-        //print("\n\n")
-        //print(numbers)
-        //print(operators)
-        
+        return 0
     }
     //open parenthace
     var operatorNum = 0
     while operators.count > operatorNum {
-        var operatorType = operators[operatorNum]
+        let operatorType = operators[operatorNum]
         if operatorType == Operator.open{
-            applyOperation(num:operatorNum, type: operatorType)
+            let status = applyOperation(num:operatorNum, type: operatorType)
+            if status == -1{return -1}
             //parenthacesOpened += 1;
             operatorNum -= 1;
         }
@@ -153,9 +143,10 @@ func evaluateExpression(input: [[Any]])->Float{
     //pow
     operatorNum = 0
     while operators.count > operatorNum {
-        var operatorType = operators[operatorNum]
+        let operatorType = operators[operatorNum]
         if operatorType == Operator.pow{
-            applyOperation(num:operatorNum, type: operatorType)
+            let status = applyOperation(num:operatorNum, type: operatorType)
+            if status == -1{return -1}
             //parenthacesOpened += 1;
             operatorNum -= 1;
         }
@@ -164,9 +155,10 @@ func evaluateExpression(input: [[Any]])->Float{
     //mul/div
     operatorNum = 0
     while operators.count > operatorNum {
-        var operatorType = operators[operatorNum]
+        let operatorType = operators[operatorNum]
         if operatorType == Operator.mul || operatorType == Operator.div{
-            applyOperation(num:operatorNum, type: operatorType)
+            let status = applyOperation(num:operatorNum, type: operatorType)
+            if status == -1{return -1}
             operatorNum -= 1;
         }
         operatorNum += 1;
@@ -174,9 +166,10 @@ func evaluateExpression(input: [[Any]])->Float{
     //add/sub
     operatorNum = 0
     while operators.count > operatorNum {
-        var operatorType = operators[operatorNum]
+        let operatorType = operators[operatorNum]
         if operatorType == Operator.add || operatorType == Operator.sub{
-            applyOperation(num:operatorNum, type: operatorType)
+            let status = applyOperation(num:operatorNum, type: operatorType)
+            if status == -1{return -1}
             operatorNum -= 1;
         }
         operatorNum += 1;
