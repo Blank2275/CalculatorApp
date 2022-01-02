@@ -95,7 +95,7 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func calculate(_ sender: Any) {
-        var res:Float = 0
+        var res:Float = evaluate(input: input)
         self.resultLabel.text = String(res)
     }
     

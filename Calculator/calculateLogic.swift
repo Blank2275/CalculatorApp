@@ -71,7 +71,7 @@ func closingParenthacesAfter(arr:[Operator], num:Int) -> Int{
     }
     return -1
 }
-func evaluateExpression(input: [[Any]])->Float{
+func evaluateExpression(input: [[Any]])->Float?{
     var res:Float = 0;
     var numbers = input[0] as! [Float]
     var operators = input[1] as! [Operator]
@@ -88,7 +88,9 @@ func evaluateExpression(input: [[Any]])->Float{
     func applyOperation(num:Int, type:Operator) -> Float{
         var res:Float = 0
         var delete = true
-        if numbers[num] == nil || numbers[num + 1] == nil{
+        if num + 1 >= numbers.count{
+            print(num)
+            print(numbers.count)
             return -1
         }
         switch type{
@@ -104,12 +106,12 @@ func evaluateExpression(input: [[Any]])->Float{
             res = pow(numbers[num], numbers[num + 1])
         case .open:
             let closingOperator = closingParenthacesAfter(arr: operators, num: num)
-            if closingOperator == -1 {return -1.0}
+            if closingOperator == -1 {return -1}
             let closingNumber = getAccurateOperatorNum(operatorNum: closingOperator)
             let pnumbers = Array(numbers[num...closingNumber])
             let poperators = Array(operators[(num + 1)..<closingOperator])
             let presult = evaluateExpression(input: [pnumbers, poperators])
-            res = presult
+            res = presult ?? 0
             delete = false
             //remove the parenthaces differently from the rest
             numbers.removeSubrange(num..<closingNumber + 1)
@@ -134,7 +136,7 @@ func evaluateExpression(input: [[Any]])->Float{
         let operatorType = operators[operatorNum]
         if operatorType == Operator.open{
             let status = applyOperation(num:operatorNum, type: operatorType)
-            if status == -1{return -1}
+            if status == -1{return nil}
             //parenthacesOpened += 1;
             operatorNum -= 1;
         }
@@ -146,7 +148,7 @@ func evaluateExpression(input: [[Any]])->Float{
         let operatorType = operators[operatorNum]
         if operatorType == Operator.pow{
             let status = applyOperation(num:operatorNum, type: operatorType)
-            if status == -1{return -1}
+            if status == -1{return nil}
             //parenthacesOpened += 1;
             operatorNum -= 1;
         }
@@ -158,7 +160,7 @@ func evaluateExpression(input: [[Any]])->Float{
         let operatorType = operators[operatorNum]
         if operatorType == Operator.mul || operatorType == Operator.div{
             let status = applyOperation(num:operatorNum, type: operatorType)
-            if status == -1{return -1}
+            if status == -1{return nil}
             operatorNum -= 1;
         }
         operatorNum += 1;
@@ -169,7 +171,7 @@ func evaluateExpression(input: [[Any]])->Float{
         let operatorType = operators[operatorNum]
         if operatorType == Operator.add || operatorType == Operator.sub{
             let status = applyOperation(num:operatorNum, type: operatorType)
-            if status == -1{return -1}
+            if status == -1{return nil}
             operatorNum -= 1;
         }
         operatorNum += 1;
@@ -179,6 +181,6 @@ func evaluateExpression(input: [[Any]])->Float{
 }
 func evaluate(input:String)->Float{
     var parsed = parseExpression(input: input)
-    var evaluated = evaluateExpression(input: parsed)
+    var evaluated = evaluateExpression(input: parsed) ?? 0
     return evaluated;
 }
